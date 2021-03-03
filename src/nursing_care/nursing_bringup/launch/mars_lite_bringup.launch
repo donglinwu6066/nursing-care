@@ -1,0 +1,62 @@
+<launch>
+    <arg name="output" default="screen"/>
+    <arg name="mob_plat_publish_tf" default="true"/>
+    <!--env name="ROSCONSOLE_CONFIG_FILE" value="$(find mars_lite_bringup)/config/diagnostic_rosconsole.config"/-->
+
+    <!-- Techman robot -->
+    <include file="$(find mars_lite_bringup)/launch/includes/tm700_bringup.launch" >
+        <arg name="prefix" default="tm_"/>
+        <arg name="robot_ip" value="195.168.0.5"/>
+        <arg name="limited" default="false"/>
+        <arg name="servo_time" default="0.001"/>
+        <arg name="min_payload" default="0.0"/>
+        <arg name="max_payload" default="5.0"/>
+        <arg name="output" value="$(arg output)"/>
+    </include>
+
+    <!-- mars lite robot model -->
+    <!--param name="robot_description" command="$(find xacro)/xacro inorder '$(find mars_lite_description)/urdf/mars_lite.urdf.xacro'"/-->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mars_lite_description)/urdf/mars_lite_with_gripper.urdf.xacro'"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link" args="0 0 0.1016 0 0 0 1 base_footprint base_link 30.0"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" required="true"> 
+        <param name="rate" value="30"/>
+        <rosparam param="source_list">["tm_joint_states"]</rosparam>
+    </node>
+
+    <!-- mars lite robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    
+    <!-- mobile platform launch file -->
+    <include file="$(find mars_lite_mob_plat)/launch/mobile_platform.launch">
+        <arg name="mob_plat_publish_tf" value="$(arg mob_plat_publish_tf)"/>
+        <arg name="output" value="$(arg output)"/>
+    </include>  
+
+    <!-- Gripper-->
+    <include file="$(find robotiq_gripper)/launch/robotiq_gripper.launch">
+        <arg name="speed" value="50"/>
+        <arg name="force" value="100"/>
+        <arg name="dev_path" default="$(env ROBOTIQ_GRIPPER_DEV)"/>
+        <arg name="output" default="$(arg output)"/>
+    </include>
+
+    <!-- Battery State -->
+    <include file="$(find batt_state)/launch/batt_state.launch">
+        <arg name="output" default="$(arg output)"/>
+    </include>
+    
+    <!-- LIDAR bringup -->
+    <include file="$(find lidar_bringup)/launch/lidar_bringup.launch">
+        <arg name="dev_path" default="$(env LIDAR_DEV)"/>
+        <arg name="output" value="$(arg output)"/>
+    </include>
+
+    <!-- IMU -->
+    <include file="$(find imu_bringup)/launch/imu_bringup.launch">
+        <arg name="output" value="$(arg output)"/>
+    </include>
+
+ 
+    
+</launch>
