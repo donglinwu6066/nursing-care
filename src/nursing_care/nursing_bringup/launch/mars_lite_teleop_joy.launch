@@ -1,0 +1,16 @@
+<launch>
+    <arg name="output" default="screen"/>
+    <!--env name="ROSCONSOLE_CONFIG_FILE" value="$(find mars_lite_bringup)/config/diagnostic_rosconsole.config"/-->
+    <arg name="obs_detect" default="true"/>
+    <!-- robot arm -->
+    <include file="$(find mars_lite_teleop)/launch/arm_teleop_joy.launch">
+        <arg name="include_joy_bringup" value="false"/>
+        <arg name="output" value="$(arg output)"/>
+    </include>
+
+    <!-- mobile platform -->
+    <include file="$(find mars_lite_teleop)/launch/mob_plat_teleop_joy.launch">
+        <arg name="output" value="$(arg output)"/>
+        <arg name="obs_detect" value="$(arg obs_detect)"/>
+    </include>
+</launch>

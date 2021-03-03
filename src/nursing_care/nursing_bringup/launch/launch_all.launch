@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <include file="$(find nursing_bringup)/launch/mars_lite_bringup.launch" />
+  <!--bringing file-->>
+  <include file="$(find nursing_bringup)/launch/mars_lite_moveit_planning_execution.launch" >
+    <arg name = "sim" value = "false"/>
+  </include>
+  <!--moving mars with keyboard(you must turn off joystick first)-->>
+  <include file="$(find nursing_bringup)/launch/mars_lite_teleop_joy.launch" >
+    <arg name = "obs_detect" value = "false"/>
+  </include>
+  <!--moving mars with joystick-->
+  <include file="$(find nursing_bringup)/launch/rs_rgbd.launch" />
+  <include file="$(find nursing_bringup)/launch/amcl.launch" />
+</launch>
