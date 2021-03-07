@@ -17,7 +17,7 @@ Human and Machine Lab in National Yang Ming Chiao Tung University
 ### navigation
 - patrol.py
 ### vision
-- object_detect.cpp
-    w
+- object_detect.cpp -
+        cc
 - pointcloud2xyz.cpp
 # work flow
