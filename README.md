@@ -10,7 +10,7 @@ Human and Machine Lab in National Yang Ming Chiao Tung University
 
 # packages introduction
 - #### arm
-   ##### go.py
+  #####  go.py
 - #### bringup
 - #### navigation
 - #### vision
