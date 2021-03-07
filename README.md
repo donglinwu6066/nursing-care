@@ -10,10 +10,10 @@ Human and Machine Lab in National Yang Ming Chiao Tung University
 
 # packages introduction
 - ### arm
-1. go.py
-test  
-2. grip.py
-3. twist.py
+go.py
+- test
+grip.py
+twist.py
 - ### bringup
 - ### navigation
 - ### vision
