@@ -1,0 +1,5 @@
+arm
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_arm/cmake.lock /home/ros/nursing_ws/nursing-care/devel/./cmake.lock
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_arm/lib/pkgconfig/nursing_arm.pc /home/ros/nursing_ws/nursing-care/devel/lib/pkgconfig/nursing_arm.pc
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_arm/share/nursing_arm/cmake/nursing_armConfig-version.cmake /home/ros/nursing_ws/nursing-care/devel/share/nursing_arm/cmake/nursing_armConfig-version.cmake
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_arm/share/nursing_arm/cmake/nursing_armConfig.cmake /home/ros/nursing_ws/nursing-care/devel/share/nursing_arm/cmake/nursing_armConfig.cmake

@@ -1,0 +1,5 @@
+navigation
+/home/ros/nursing_ws/nursing-care/devel/.private/navigation/cmake.lock /home/ros/nursing_ws/nursing-care/devel/./cmake.lock
+/home/ros/nursing_ws/nursing-care/devel/.private/navigation/lib/pkgconfig/navigation.pc /home/ros/nursing_ws/nursing-care/devel/lib/pkgconfig/navigation.pc
+/home/ros/nursing_ws/nursing-care/devel/.private/navigation/share/navigation/cmake/navigationConfig-version.cmake /home/ros/nursing_ws/nursing-care/devel/share/navigation/cmake/navigationConfig-version.cmake
+/home/ros/nursing_ws/nursing-care/devel/.private/navigation/share/navigation/cmake/navigationConfig.cmake /home/ros/nursing_ws/nursing-care/devel/share/navigation/cmake/navigationConfig.cmake
