@@ -44,6 +44,7 @@
 # Python 2/3 compatibility imports
 from __future__ import print_function
 from six.moves import input
+from std_msgs.msg import Bool
 
 import sys
 import copy
@@ -51,7 +52,7 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
-from math import pi, dist, fabs, cos
+#from math import pi, dist, fabs, cos
 try:
   from math import tau
 except: # For Python 2 compatibility
@@ -92,16 +93,16 @@ def all_close(goal, actual, tolerance):
   return True
 
 
-class MoveGroupPythonInterfaceTutorial(object):
+class MoveGroupPythonInterfaceNursing(object):
   """MoveGroupPythonInterfaceTutorial"""
   def __init__(self):
-    super(MoveGroupPythonInterfaceTutorial, self).__init__()
+    super(MoveGroupPythonInterfaceNursing, self).__init__()
 
     ## BEGIN_SUB_TUTORIAL setup
     ##
     ## First initialize `moveit_commander`_ and a `rospy`_ node:
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node('move_group_python_interface_tutorial', anonymous=True)
+    rospy.init_node('move_group_python_interface_nursing', anonymous=True)
 
     ## Instantiate a `RobotCommander`_ object. Provides information such as the robot's
     ## kinematic model and the robot's current joint states
@@ -118,7 +119,7 @@ class MoveGroupPythonInterfaceTutorial(object):
     ## If you are using a different robot, change this value to the name of your robot
     ## arm planning group.
     ## This interface can be used to plan and execute motions:
-    group_name = "panda_arm"
+    group_name = "tm_arm"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
     ## Create a `DisplayTrajectory`_ ROS publisher which is used to display
@@ -128,7 +129,7 @@ class MoveGroupPythonInterfaceTutorial(object):
                                                    queue_size=20)
 
     ## END_SUB_TUTORIAL
-
+    pub = rospy.Publisher("gripper/cmd_gripper", Bool, queue_size=10)
     ## BEGIN_SUB_TUTORIAL basic_info
     ##
     ## Getting Basic Information
@@ -161,7 +162,18 @@ class MoveGroupPythonInterfaceTutorial(object):
     self.planning_frame = planning_frame
     self.eef_link = eef_link
     self.group_names = group_names
+    self.pub = pub
+    pub.publish(True)
 
+  def gripper_hold(self):
+    move_group = self.move_group
+    pub = self.pub
+    pub.publish(True)
+
+  def gripper_release(self):
+    move_group = self.move_group
+    pub = self.pub
+    pub.publish(False)
 
   def go_to_joint_state(self):
     # Copy class variables to local variables to make the web tutorials more clear.
@@ -179,12 +191,12 @@ class MoveGroupPythonInterfaceTutorial(object):
     # We get the joint values from the group and change some of the values:
     joint_goal = move_group.get_current_joint_values()
     joint_goal[0] = 0
-    joint_goal[1] = -tau/8
+    joint_goal[1] = 0
     joint_goal[2] = 0
-    joint_goal[3] = -tau/4
+    joint_goal[3] = 0
     joint_goal[4] = 0
-    joint_goal[5] = tau/6  # 1/6 of a turn
-    joint_goal[6] = 0
+    joint_goal[5] = 0  # 1/6 of a turn
+    #joint_goal[6] = 0
 
     # The go command can be called with joint values, poses, or without any
     # parameters if you have already set the pose or joint target for the group
@@ -473,7 +485,7 @@ def main():
     print("Press Ctrl-D to exit at any time")
     print("")
     input("============ Press `Enter` to begin the tutorial by setting up the moveit_commander ...")
-    tutorial = MoveGroupPythonInterfaceTutorial()
+    tutorial = MoveGroupPythonInterfaceNursing()
 
     input("============ Press `Enter` to execute a movement using a joint state goal ...")
     tutorial.go_to_joint_state()
