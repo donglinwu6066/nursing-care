@@ -1,0 +1,5 @@
+bringup
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_bringup/cmake.lock /home/ros/nursing_ws/nursing-care/devel/./cmake.lock
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_bringup/lib/pkgconfig/nursing_bringup.pc /home/ros/nursing_ws/nursing-care/devel/lib/pkgconfig/nursing_bringup.pc
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_bringup/share/nursing_bringup/cmake/nursing_bringupConfig-version.cmake /home/ros/nursing_ws/nursing-care/devel/share/nursing_bringup/cmake/nursing_bringupConfig-version.cmake
+/home/ros/nursing_ws/nursing-care/devel/.private/nursing_bringup/share/nursing_bringup/cmake/nursing_bringupConfig.cmake /home/ros/nursing_ws/nursing-care/devel/share/nursing_bringup/cmake/nursing_bringupConfig.cmake
