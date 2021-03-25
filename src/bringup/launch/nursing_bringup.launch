@@ -1,0 +1,19 @@
+<launch>
+  <!--mars_lite_bringup.launch-->
+  <include file="$(find mars_lite_bringup)/launch/mars_lite_bringup.launch">	
+    <arg name="mob_plat_publish_tf"    default="false"/>
+  </include>
+
+  <!--mars_lite_moveit_planning_execution.launch-->
+  <include file="$(find mars_lite_moveit_config)/launch/mars_lite_moveit_planning_execution.launch">	
+    <arg name="sim"    default="false"/>
+  </include>
+
+  <!--amcl.launch-->
+  <include file="$(find mars_lite_2dnav)/launch/amcl.launch">	
+  </include>
+  
+  <!--rs_rgbd.launch(camera)-->
+  <!--include file="$(find object_detection)/launch/rs_rgbd.launch" /-->
+
+</launch>
