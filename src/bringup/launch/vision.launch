@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="serial_no"           default="832112070218"/>
+    <include file="$(find vision)/launch/object_detection.launch" />
+        <arg name="serial" value="$(arg serial_no)" />
+</launch>

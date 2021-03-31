@@ -1,0 +1,6 @@
+<launch>
+  <!-- camera tf -->
+  <!-- TODO -->
+  <node pkg="tf" type="static_transform_publisher" name="tip_to_camera" 
+    args="0.035 0.08 0.025 0 -1.57079632679 -1.57079632679 tm_tip_link rs_camera_link 10" />
+</launch>
