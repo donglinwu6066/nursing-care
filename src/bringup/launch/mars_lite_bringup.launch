@@ -1,6 +1,6 @@
 <launch>
     <arg name="output" default="screen"/>
-    <arg name="mob_plat_publish_tf" default="true"/>
+    <arg name="mob_plat_publish_tf" default="false"/>
     <!--env name="ROSCONSOLE_CONFIG_FILE" value="$(find mars_lite_bringup)/config/diagnostic_rosconsole.config"/-->
 
     <!-- Techman robot -->
