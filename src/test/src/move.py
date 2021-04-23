@@ -1,4 +1,3 @@
-#!/usr/bin/env python2.7
 from math import pi, sqrt
 import sys
 import copy
@@ -19,32 +18,62 @@ from std_srvs.srv import Trigger, TriggerResponse, Empty
 from std_msgs.msg import Bool
 
 import time
-import patrol_test
 import sys, select, termios, tty
 #from pose_estimate_and_pick.srv import *
 #from object_detection.srv import *
 #from apriltags_ros.msg import AprilTagDetectionArray, AprilTagDetection
+ 
+"""
+"""
 
+from __future__ import print_function
+from geometry_msgs.msg import Twist
 
-
-
-armControl={
-        'q':(0.01,0,0),
-        'a':(-0.01,0,0),
-        'w':(0,0.01,0),
-        's':(0,-0.01,0),
-        'e':(0,0,0.01),
-        'd':(0,0,-0.01),
-	'x':(0,0,0),
+moveBindings = {
+        'i':(1,0,0,0),
+        'o':(1,0,0,-1),
+        'j':(0,0,0,1),
+        'l':(0,0,0,-1),
+        'u':(1,0,0,1),
+        ',':(-1,0,0,0),
+        '.':(-1,0,0,1),
+        'm':(-1,0,0,-1),
+        'O':(1,-1,0,0),
+        'I':(1,0,0,0),
+        'J':(0,1,0,0),
+        'L':(0,-1,0,0),
+        'U':(1,1,0,0),
+        '<':(-1,0,0,0),
+        '>':(-1,-1,0,0),
+        'M':(-1,1,0,0),
+        't':(0,0,1,0),
+        'b':(0,0,-1,0),
     }
 
+speedBindings={
+        'q':(1.1,1.1),
+        'z':(.9,.9),
+        'w':(1.1,1),
+        'x':(.9,1),
+        'e':(1,1.1),
+        'c':(1,.9),
+    }
+
+armControl={
+         'q':(0.01,0,0),
+         'a':(-0.01,0,0),
+         'w':(0,0.01,0),
+         's':(0,-0.01,0),
+         'e':(0,0,0.01),
+         'd':(0,0,-0.01),
+         'x':(0,0,0),
+     }
 def getKey():
     tty.setraw(sys.stdin.fileno())
     select.select([sys.stdin], [], [], 0)
     key = sys.stdin.read(1)
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
     return key
-
 if __name__ == '__main__':
     settings = termios.tcgetattr(sys.stdin)
 
@@ -159,72 +188,7 @@ if __name__ == '__main__':
                 joint_goal = group.get_current_joint_values()	
                 joint_goal[5] -= pi/12
                 group.go(joint_goal, wait=True)  
-            if(key == 'y'):
-                joint_goal = group.get_current_joint_values()
-		joint_goal[0] = pi/2
-                joint_goal[1] = pi/2
-                joint_goal[2] = -1.76
-                joint_goal[3] = 0.89117479
-                joint_goal[4] = 0.0021525
-                joint_goal[5] = 0.676741
-                group.go(joint_goal, wait=True) 	
-            if(key=='u'):
-                joint_goal = group.get_current_joint_values()
-                joint_goal[0] = 1.5700684
-                joint_goal[1] = -0.003091824
-                joint_goal[2] = 0.16347
-                joint_goal[3] = -1.68422329
-                joint_goal[4] = 0.005206889
-                joint_goal[5] = 0.0471839
-                group.go(joint_goal, wait=True)
-            if(key=='p'):
-                joint_goal = group.get_current_joint_values()
-                joint_goal[0] = 1.5700684
-                joint_goal[1] = -0.003091824
-                joint_goal[2] = 0.16347
-                joint_goal[3] = -1.68422329
-                joint_goal[4] = 0.005206889
-                joint_goal[5] = 0.0471839
-                group.go(joint_goal, wait=True)
-                raw_input("0")
-                joint_goal = group.get_current_joint_values()
-		joint_goal[0] = 1.263137936
-                joint_goal[1] = 1.5626655817
-                joint_goal[2] = -1.16622769832
-                joint_goal[3] = -0.39897254109
-                joint_goal[4] = 0.30457934737
-                joint_goal[5] = -0.00200712867
-                group.go(joint_goal, wait=True) 	
-
-
- 		raw_input("1")
-		pose_target = group.get_current_pose().pose
-                pose_target.position.x += 0.14                 
-		#pose_target.position.y +=  armControl[key][1]
-                #pose_target.position.z +=  armControl[key][2]
-                group.set_pose_target(pose_target)
-                group.go(wait=True)
-                raw_input("2")
-                pub.publish(True)
-		raw_input("3")	
-
-                joint_goal = group.get_current_joint_values()	
-                joint_goal[5] += 4*pi/12
-                group.go(joint_goal, wait=True) 
-		raw_input("4")	
-	    
-
-		pose_target = group.get_current_pose().pose
-                pose_target.position.x += 0.03                 
-		#pose_target.position.y +=  armControl[key][1]
-                #pose_target.position.z +=  armControl[key][2]
-                group.set_pose_target(pose_target)
-                group.go(wait=True)
-		#raw_input("move forward")	
-		#patrol_test.move( -0.226627887555, -0.201973177483, 0.99482696316, 0.101584021233)
-
-			
-	    if(key == '\x03'):
+            if (key == '\x03'):
                 break
 
 
@@ -234,4 +198,3 @@ if __name__ == '__main__':
     finally:
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
         print "============ Bye"
-    #rospy.spin()
