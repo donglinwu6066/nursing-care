@@ -145,11 +145,11 @@ if __name__ == '__main__':
                 group.go(joint_goal, wait=True) 
             if(key == '.'):
                 joint_goal = group.get_current_joint_values()	
-                joint_goal[4] += pi/12
+                joint_goal[4] += pi/24
                 group.go(joint_goal, wait=True) 
             if(key == '/'):
                 joint_goal = group.get_current_joint_values()	
-                joint_goal[4] -= pi/12
+                joint_goal[4] -= pi/24
                 group.go(joint_goal, wait=True)
             if(key == 'j'):
                 joint_goal = group.get_current_joint_values()	
@@ -161,12 +161,12 @@ if __name__ == '__main__':
                 group.go(joint_goal, wait=True)  
             if(key == 'y'):
                 joint_goal = group.get_current_joint_values()
-		joint_goal[0] = pi/2
-                joint_goal[1] = pi/2
-                joint_goal[2] = -1.76
-                joint_goal[3] = 0.89117479
-                joint_goal[4] = 0.0021525
-                joint_goal[5] = 0.676741
+		joint_goal[0] = 1.66030991
+                joint_goal[1] = 1.68294799
+                joint_goal[2] = -1.75615036
+                joint_goal[3] = 0.05834247
+                joint_goal[4] = -0.016470089
+                joint_goal[5] = -0.0313480533
                 group.go(joint_goal, wait=True) 	
             if(key=='u'):
                 joint_goal = group.get_current_joint_values()
@@ -179,49 +179,24 @@ if __name__ == '__main__':
                 group.go(joint_goal, wait=True)
             if(key=='p'):
                 joint_goal = group.get_current_joint_values()
-                joint_goal[0] = 1.5700684
-                joint_goal[1] = -0.003091824
-                joint_goal[2] = 0.16347
-                joint_goal[3] = -1.68422329
-                joint_goal[4] = 0.005206889
-                joint_goal[5] = 0.0471839
+                joint_goal[0] = 1.760131716728
+                joint_goal[1] = 1.6801549
+                joint_goal[2] = -1.78625369
+                joint_goal[3] = 0.10935457
+                joint_goal[4] = -0.116103179
+                joint_goal[5] = 0.77145493
                 group.go(joint_goal, wait=True)
-                raw_input("0")
-                joint_goal = group.get_current_joint_values()
-		joint_goal[0] = 1.263137936
-                joint_goal[1] = 1.5626655817
-                joint_goal[2] = -1.16622769832
-                joint_goal[3] = -0.39897254109
-                joint_goal[4] = 0.30457934737
-                joint_goal[5] = -0.00200712867
-                group.go(joint_goal, wait=True) 	
-
-
- 		raw_input("1")
-		pose_target = group.get_current_pose().pose
-                pose_target.position.x += 0.14                 
-		#pose_target.position.y +=  armControl[key][1]
-                #pose_target.position.z +=  armControl[key][2]
-                group.set_pose_target(pose_target)
-                group.go(wait=True)
-                raw_input("2")
+		raw_input("0")
                 pub.publish(True)
-		raw_input("3")	
-
+		raw_input("1")
                 joint_goal = group.get_current_joint_values()	
-                joint_goal[5] += 4*pi/12
+                joint_goal[5] += pi/4
                 group.go(joint_goal, wait=True) 
-		raw_input("4")	
-	    
-
-		pose_target = group.get_current_pose().pose
-                pose_target.position.x += 0.03                 
-		#pose_target.position.y +=  armControl[key][1]
-                #pose_target.position.z +=  armControl[key][2]
+		raw_input("2")
+                pose_target = group.get_current_pose().pose
+                pose_target.position.x +=  0.06
                 group.set_pose_target(pose_target)
                 group.go(wait=True)
-		#raw_input("move forward")	
-		#patrol_test.move( -0.226627887555, -0.201973177483, 0.99482696316, 0.101584021233)
 
 			
 	    if(key == '\x03'):
