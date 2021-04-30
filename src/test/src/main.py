@@ -5,17 +5,26 @@ from move_group_python_interface_nursing import MoveGroupPythonInterfaceNursing
 import variable
 import patrol_test
 from std_msgs.msg import Bool
-import Detection
-
+import numpy as np
+import roslib
 import sys
+from camera import Camera
 import rospy
+
+
 if __name__ == '__main__':
+    # roslib.load_manifest("vision")
+    # print(sys.path)
+    realsense = Camera()
+    print(realsense.get_point())
     try:
         print("----------------------------------------------------------")
         print("Welcome to the MoveIt MoveGroup Python Interface Nursing")
         print("----------------------------------------------------------")
         print("Press Ctrl-D to exit at any time")
         print("")
+        # print(vision.realsense_tf())
+        # print(vision.image_depth())
         input("============ Press `Enter` to begin the process ...")
         tutorial = MoveGroupPythonInterfaceNursing()
 
@@ -46,3 +55,7 @@ if __name__ == '__main__':
         pass
     except KeyboardInterrupt:
         pass
+
+
+def test():
+    print()
