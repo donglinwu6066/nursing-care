@@ -3,7 +3,7 @@
   <include file="$(find vision)/launch/camera_tf.launch">
   </include>
 
-  <arg name="serial"           default="832112070218"/>
+  <arg name="serial"           default="936322071233"/>
   <include file="$(find vision)/launch/rs_rgbd.launch">
       <arg name="serial_no"           value="$(arg serial)"/>
   </include>
