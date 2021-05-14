@@ -11,12 +11,13 @@ import sys
 from camera import Camera
 import rospy
 
+import time
 
 if __name__ == '__main__':
     # roslib.load_manifest("vision")
     # print(sys.path)
-    realsense = Camera()
-    print(realsense.get_point())
+    # realsense = Camera()
+    # print(realsense.get_point())
     try:
         print("----------------------------------------------------------")
         print("Welcome to the MoveIt MoveGroup Python Interface Nursing")
@@ -27,28 +28,32 @@ if __name__ == '__main__':
         # print(vision.image_depth())
         input("============ Press `Enter` to begin the process ...")
         tutorial = MoveGroupPythonInterfaceNursing()
-
-        input("============ Go to the door knob ...")
-        node = Detection(0.9, 1, 10)
-        #patrol_test.move(4.61152219772, -5.15782785416, -0.37051665948, 0.928825820619)
-
-        input("============ Standby position ...")
-        tutorial.go_to_joint_state()
-
-        input("============ Stretch arm ...")
-
-        input("gripper_hold")
         tutorial.gripper_hold()
-
-        input("gripper_release")
+        time_duration = 3.5
+        time.sleep(time_duration)
         tutorial.gripper_release()
 
-        input("============ Press `Enter` to execute a movement using a pose goal ...")
-        tutorial.go_to_pose_goal()
+        # input("============ Go to the door knob ...")
+        # node = Detection(0.9, 1, 10)
+        # #patrol_test.move(4.61152219772, -5.15782785416, -0.37051665948, 0.928825820619)
 
-        input("============ Press `Enter` to plan and execute a path with an attached collision object ...")
-        cartesian_plan, fraction = tutorial.plan_cartesian_path(scale=-1)
-        tutorial.execute_plan(cartesian_plan)
+        # input("============ Standby position ...")
+        # tutorial.go_to_joint_state()
+
+        # input("============ Stretch arm ...")
+
+        # input("gripper_hold")
+        # tutorial.gripper_hold()
+
+        # input("gripper_release")
+        # tutorial.gripper_release()
+
+        # input("============ Press `Enter` to execute a movement using a pose goal ...")
+        # tutorial.go_to_pose_goal()
+
+        # input("============ Press `Enter` to plan and execute a path with an attached collision object ...")
+        # cartesian_plan, fraction = tutorial.plan_cartesian_path(scale=-1)
+        # tutorial.execute_plan(cartesian_plan)
 
         print("============ Caring system complete!")
     except rospy.ROSInterruptException:
