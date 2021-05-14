@@ -7,11 +7,10 @@ from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
 
 PARENT_LINK = "gripper_base"
-TARGET_LINK = "base_link"
+TARGET_LINK = "tm_base"
 DEPTH_IMAGE_TOPIC = "/camera/aligned_depth_to_color/image_raw"
 CAMERA_INFO_TOPIC = "/camera/color/camera_info"
 # CAMERA_RESOLUTION = (480, 640)
-
 
 class Camera(object):
 
@@ -34,10 +33,6 @@ class Camera(object):
         translation = np.append(translation, [[0, 0, 0]], 0)
         rotation_q = np.transpose(rotation_q)
         tf_cam2base = np.column_stack((translation, rotation_q))
-
-        #translation = np.append(translation, rotation_q[0], 1)
-        # translation = np.append(translation, [[rotation_q.index(
-        #    1)], [rotation_q.index(2)], [rotation_q.index(3)]], 1)
 
         return tf_cam2base
 
@@ -108,7 +103,7 @@ class Camera(object):
 
 if __name__ == '__main__':
     rospy.init_node('Camera', anonymous=False)
-
+    pub = rospy.Publisher('image/depth', String, queue_size=3)
     try:
         camera = Camera()
         print(camera.get_point())
