@@ -1,10 +1,10 @@
 <launch>
   <!-- camera tf -->
-  <include file="$(find vision)/launch/camera_tf.launch">
+  <include file="$(find vision)/launch/gripper_realsense_tf.launch">
   </include>
 
   <arg name="serial"           default="936322071233"/>
-  <include file="$(find vision)/launch/rs_rgbd.launch">
+  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
       <arg name="serial_no"           value="$(arg serial)"/>
   </include>
 
@@ -24,6 +24,6 @@
     <arg name="network_param_file"    value="$(find darknet_ros)/config/yolov3-nursing.yaml"/>
     <arg name="image" value="$(arg image)" />
   </include>
-  <node pkg="tf" type="static_transform_publisher" name="item_tf" 
-    args="-0.175 0 -0.045 1.57079632679 0 1.57079632679 item_link item_tf_link 10" />
+  <!-- <node pkg="tf" type="static_transform_publisher" name="item_tf" 
+    args="-0.175 0 -0.045 1.57079632679 0 1.57079632679 item_link item_tf_link 10" />  -->
 </launch>

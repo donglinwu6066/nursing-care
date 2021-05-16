@@ -75,8 +75,13 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+
   <build_depend>darknet_ros_msgs</build_depend>
   <build_export_depend>darknet_ros_msgs</build_export_depend>
   <exec_depend>darknet_ros_msgs</exec_depend>
+  <build_depend>python-numpy</build_depend>
+  <exec_depend>python-numpy</exec_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
 
 </package>
