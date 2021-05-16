@@ -12,7 +12,7 @@ import moveit_msgs.msg
 import geometry_msgs.msg
 from std_msgs.msg import String
 
-from geometry_msgs.msg import Pose, PoseStamped, Quaternion, Point
+from geometry_msgs.msg import Pose, PoseStamped, Quaternion, Point, TransformStamped
 from moveit_msgs.msg import DisplayTrajectory, JointConstraint, Constraints
 from std_msgs.msg import String, Float64, Bool, Header
 from std_srvs.srv import Trigger, TriggerResponse, Empty
@@ -24,6 +24,9 @@ import sys
 import select
 import termios
 import tty
+
+from tf import TransformListener
+
 #from pose_estimate_and_pick.srv import *
 #from object_detection.srv import *
 #from apriltags_ros.msg import AprilTagDetectionArray, AprilTagDetection
@@ -57,7 +60,9 @@ if __name__ == '__main__':
     group = moveit_commander.MoveGroupCommander("tm_arm")
     #group = moveit_commander.MoveGroupCommander("manipulator")
     pub = rospy.Publisher('gripper/cmd_gripper', Bool, queue_size=10)
-
+    listener = tf.TransformListener()
+    tf2 = geometry_msgs.msg.TransformStamped()
+    
     try:
         print "============ your key..."
         while(1):
@@ -191,7 +196,16 @@ if __name__ == '__main__':
                 joint_goal[2] = -1.78625369
                 joint_goal[3] = 0.10935457
                 joint_goal[4] = -0.116103179
-                joint_goal[5] = 0.77145493
+                joint_goal[5] = 0
+                group.go(joint_goal, wait=True)
+            if(key == '='):
+                joint_goal = group.get_current_joint_values()
+                joint_goal[0] = -1.0271514
+                joint_goal[1] = -0.76853311
+                joint_goal[2] = 2.03836488
+                joint_goal[3] = -1.265499353
+                joint_goal[4] = 2.60040473937
+                joint_goal[5] = -0.01107314415
                 group.go(joint_goal, wait=True)
                 # raw_input("0")
                 # pub.publish(True)
@@ -206,9 +220,15 @@ if __name__ == '__main__':
                 # group.go(wait=True)
             if(key == '['):
                 pose_target = group.get_current_pose().pose
-                pose_target.position.x = 0.47
-                pose_target.position.y = -0.01337232
-                pose_target.position.z = 0.82400006
+		print("x: ", pose_target.position.x)
+		print("y: ", pose_target.position.y)
+		print("z: ", pose_target.position.z)
+                inx = input("please input your x: ")
+                iny = input("please input your y: ")
+                inz = input("please input your z: ")
+		pose_target.position.x += inx
+                pose_target.position.y += iny
+                pose_target.position.z += inz
                 group.set_pose_target(pose_target)
                 group.go(wait=True)
             if(key == ']'):
@@ -223,14 +243,10 @@ if __name__ == '__main__':
 		print(pose_target.orientation.z)
 		print(pose_target.orientation.w)
             if(key == '0'):
-                pose_target = group.get_current_pose().pose
-		pose_target.orientation.x = 1
-		pose_target.orientation.y = 0
-		pose_target.orientation.z = 0
-		pose_target.orientation.w = 0
-                group.set_pose_target(pose_target)
-                group.go(wait=True)
-
+                joint_names = group.get_joints()
+		print(joint_names)
+		#listener.waitForTransform()
+		#listener.lookupTransform()
             if(key == '\x03'):
                 break
 
