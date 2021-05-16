@@ -27,7 +27,7 @@ class Image_depth(object):
         # "nursing/rotation_radian", data_class=np.float32)
         rospy.init_node('image_depth', anonymous=True)
 
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(2)
         # CVand ROSImage brige
         self.cvbridge = CvBridge()
         self.intrinsic_matrix = None
@@ -38,7 +38,7 @@ class Image_depth(object):
         # Get camera intrinsic matrix
         try:
             info_msg = rospy.wait_for_message(
-                CAMERA_INFO_TOPIC, CameraInfo, timeout=0.5)
+                CAMERA_INFO_TOPIC, CameraInfo, timeout=1)
             self.intrinsic_matrix = np.array(info_msg.K).reshape((3, 3))
             # print(intrinsic_matrix)
         except rospy.ROSException as e:
@@ -57,7 +57,10 @@ class Image_depth(object):
             exit(-1)
 
     def get_bbox(self, boxes_msg):
-        print("hi")
+        ### depth is x axis ###
+        ### left is y axis ###
+        ### up is z axis ###
+
         # Get box info
         for bbox in boxes_msg.bounding_boxes:
             if bbox.Class == TARGET_CLASS:
@@ -68,7 +71,7 @@ class Image_depth(object):
                 if self.depth_array[ymid, xmid] is not None:
                     print("depth of box center: {:.2f}mm".format(
                         self.depth_array[ymid, xmid]))
-                    p = Point(xmid, ymid, self.depth_array[xmid, ymid])
+                    p = Point(xmid, ymid, self.depth_array[ymid, xmid])
                 else:
                     for i in range(-2, 2):
                         for j in range(-2, 2):
@@ -81,8 +84,17 @@ class Image_depth(object):
                                 i = j = 2
                                 break
         vector_cam = self.pixel2cam(p)
-        rospy.loginfo(vector_cam)
-        print(vector_cam)
+        # vector_cam = np.array([ymid, xmid, self.depth_array[ymid, xmid]])
+        temp = vector_cam[0]
+        temp1 = vector_cam[1]
+        vector_cam[0] = self.depth_array[ymid, xmid]
+        vector_cam[1] = temp
+        vector_cam[2] = temp1
+        # vector_cam[0] = self.depth_array[ymid, xmid]
+        # vector_cam[2] =
+        # self.pub_doorknob.publish(vector_cam)
+        # rospy.loginfo(vector_cam)
+        # print(vector_cam)
         self.pub_doorknob.publish(vector_cam)
 
     def get_point():
