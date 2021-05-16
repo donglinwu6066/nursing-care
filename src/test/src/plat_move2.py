@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 import rospy
 from geometry_msgs.msg import Twist
-import math
+PI = 3.1415926535897
 
 def rotate():
     #Starts a new node
-    rospy.init_node('robot_cleaner', anonymous=True)
-    velocity_publisher = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
+    rospy.init_node('plat_move', anonymous=True)
+    velocity_publisher = rospy.Publisher('/mob_plat/cmd_vel', Twist, queue_size=10)
     vel_msg = Twist()
 
     # Receiveing the user's input
     print("Let's rotate your robot")
-    speed = input("Input your speed (degrees/sec):")
+    speed = 15 #input("Input your speed (degrees/sec):")
     angle = input("Type your distance (degrees):")
     clockwise = input("Clockwise?: ") #True or false
 
@@ -20,9 +20,9 @@ def rotate():
     relative_angle = angle*2*PI/360
 
     #We wont use linear components
-    vel_msg.linear.x=0
-    vel_msg.linear.y=0
-    vel_msg.linear.z=0
+    vel_msg.linear.x = 0
+    vel_msg.linear.y = 0
+    vel_msg.linear.z = 0
     vel_msg.angular.x = 0
     vel_msg.angular.y = 0
 
@@ -54,29 +54,21 @@ def move():
 
     #Receiveing the user's input
     print("Let's move your marslite lol")
-    speed = input("Input your speed:")
+    speed = 0.1 # input("Input your speed:")
     distance = input("Type your distance:")
-    isForward = input("Foward?: ")# True or False
-    clockwise = input("Clockwise?: ") #True or false
+    isForward = input("Foward?: ")#True or False
 
-    angular_speed = speed*2*PI/360
-    relative_angle = angle*2*PI/360
-    
     #Checking if the movement is forward or backwards
     if(isForward):
         vel_msg.linear.x = abs(speed)
     else:
         vel_msg.linear.x = -abs(speed)
     #Since we are moving just in x-axis
-    if(isLeft):
-        vel_msg.angular.z = -abs(angular_speed)
-    else:
-        vel_msg.angular.z = abs(angular_speed)
-    
     vel_msg.linear.y = 0
     vel_msg.linear.z = 0
     vel_msg.angular.x = 0
     vel_msg.angular.y = 0
+    vel_msg.angular.z = 0
 
     while not rospy.is_shutdown():
 
@@ -96,16 +88,15 @@ def move():
         vel_msg.linear.x = 0
         #Force the robot to stop
         velocity_publisher.publish(vel_msg)
+        rospy.spin()
 
 if __name__ == '__main__':
     try:
         #Testing our function
-        rot = input("Rotate? :")
-        if(rot)
+        rot = input("Rotate or not?")
+        if(rot):
             rotate()
-        else
+        else: 
             move()
-            
-    except rospy.ROSInterruptException:
-        pass
-        
+
+    except rospy.ROSInterruptException: pass
