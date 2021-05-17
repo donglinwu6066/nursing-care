@@ -30,8 +30,8 @@ class Image_depth(object):
         # rotate degree to parallel with wall
         # self.pub_rotation = rospy.Publisher(
         #     "nursing/rotation_radian", data_class=Floats, queue_size=5)
-        self.srv_rotation = rospy.Service(
-            'rotation', service_class=Rotation, handler=self.get_rotation)
+        # self.srv_rotation = rospy.Service(
+        #     'rotation', service_class=Rotation, handler=self.get_rotation)
 
         # publish frequency
         self.rate = rospy.Rate(2)
@@ -160,7 +160,7 @@ class Image_depth(object):
         while not rospy.is_shutdown():
             self.get_depth_array()
 
-            self.publish_rotation()
+            # self.get_rotation()
             # sub_tf = rospy.Subscriber(
             # "nursing/mid_depth", data_class=Floats, callback=self.get_depth_array())
             sub_bbox = rospy.Subscriber(
