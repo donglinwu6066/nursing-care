@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 from six.moves import input
-from move_group_python_interface_nursing import MoveGroupPythonInterfaceNursing
-import variable
-import patrol_test
+from test.move_group_python_interface_nursing import MoveGroupPythonInterfaceNursing
+import test.patrol_test
+import test.arm_control_test
+import test.plat_move
 from std_msgs.msg import Bool
 import numpy as np
 import roslib
@@ -12,8 +13,12 @@ from camera import Camera
 import rospy
 
 import time
+import select
+import termios
+import tty
 
 if __name__ == '__main__':
+    settings = termios.tcgetattr(sys.stdin)
     # roslib.load_manifest("vision")
     # print(sys.path)
     # realsense = Camera()
@@ -24,6 +29,8 @@ if __name__ == '__main__':
         print("----------------------------------------------------------")
         print("Press Ctrl-D to exit at any time")
         print("")
+        # plat_move.rotate()
+        # arm_control_test.arm_key()
         # print(vision.realsense_tf())
         # print(vision.image_depth())
         input("============ Press `Enter` to begin the process ...")
