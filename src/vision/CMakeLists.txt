@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs 
   pcl_ros 
   darknet_ros_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -49,7 +50,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##     and list every .msg/.srv/.action file to be processed
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
-  
+
 # Generate messages in the 'msg' folder
 add_message_files(
   FILES
@@ -74,6 +75,7 @@ generate_messages(
   DEPENDENCIES
   std_msgs
 )
+
 catkin_package(CATKIN_DEPENDS message_runtime)
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
