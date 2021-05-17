@@ -1,0 +1,6 @@
+
+#request fields
+bool request
+---
+#response fields
+String rotate
