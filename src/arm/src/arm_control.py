@@ -21,7 +21,7 @@ from vision.msg import Floats
 from time import sleep
 
 import time
-import patrol_test
+#import patrol_test
 import sys
 import select
 import termios
@@ -62,14 +62,18 @@ def autofix():
     global disz
     pose_target = group.get_current_pose().pose
     pose_target.position.x += 0
-    pose_target.position.y += -disy
-    pose_target.position.z += -disz
+    pose_target.position.y = pose_target.position.y - disy + 0.05
+    pose_target.position.z = pose_target.position.z - disz + 0.045
     group.set_pose_target(pose_target)
     group.go(wait=True)
     print("x: ", disx)
     print("y: ", disy)
     print("z: ", disz) 
     print("")
+
+
+
+
 
 
 def getKey():
@@ -187,8 +191,8 @@ def arm_key():
             joint_goal = group.get_current_joint_values()
             joint_goal[5] -= pi/12
             group.go(joint_goal, wait=True)
-        if(key == 'y'):
-            joint_goal = group.get_current_joint_values()
+	    if(key == 'y'):
+		    joint_goal = group.get_current_joint_values()
             joint_goal[0] = 1.66030991
             joint_goal[1] = 1.68294799
             joint_goal[2] = -1.75615036
@@ -248,18 +252,20 @@ def arm_key():
             group.set_pose_target(pose_target)
             group.go(wait=True)
         if(key == ']'):
-            pose_target = group.get_current_pose().pose
-            print("position:")
-            print(pose_target.position.x)
-            print(pose_target.position.y)
-            print(pose_target.position.z)
-            print("quaternion:")
-            print(pose_target.orientation.x)
-            print(pose_target.orientation.y)
-            print(pose_target.orientation.z)
-            print(pose_target.orientation.w)
+            joint_goal = group.get_current_joint_values()
+            joint_goal[0] = 2.45
+            joint_goal[1] = 1.684279
+            joint_goal[2] = -1.636384
+            joint_goal[3] = -0.04736629
+            joint_goal[4] = -0.8064584
+            joint_goal[5] = -0.0020653
+            group.go(joint_goal, wait=True)
         if(key == '0'):
 	   autofix()
+        if(key == '9'):
+           print(disx)
+           print(disy)
+           print(disz)
         if(key == '\x03'):
             break
 
@@ -270,7 +276,7 @@ if __name__ == '__main__':
     # group = moveit_commander.MoveGroupCommander("tm_arm")
     #group = moveit_commander.MoveGroupCommander("manipulator")
     pub = rospy.Publisher('gripper/cmd_gripper', Bool, queue_size=10)
-    rospy.Subscriber("nursing/doorknob_depth", Floats, grabdata,queue_size = 1)
+    rospy.Subscriber("/nursing/doorknob_depth", Floats, grabdata,queue_size = 10)
     listener = tf.TransformListener()
     tf2 = geometry_msgs.msg.TransformStamped()
     
