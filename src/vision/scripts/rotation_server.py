@@ -3,6 +3,7 @@
 
 import numpy as np
 import rospy
+import math
 from rospy.client import init_node
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
@@ -28,10 +29,20 @@ def rotation_server():
     print("Ready to generate rotation.")
     rospy.spin()
 
+def get_angle(a, b):
+    c = math.sqrt(a*a+b*b - math.sqrt(3)*a*b)
+    # print("c = ", c)
+    theta = (a*a+c*c-b*b) / (2*a*c)
+    # print("theta = ", theta)
+    arccos = math.acos(theta) / math.pi * 180
+    # print(arccos)
+    delta = 90 - arccos
+    # print(delta)
+    return delta
 
 def handle_rotation(req):
     # if req.request is 1:
-    print("UNDER CONSTRUCTION")
+    print("UNDER CONSTRUCTION OF ANGLE")
     depth()
 
     # get left and right point on image
@@ -42,13 +53,17 @@ def handle_rotation(req):
     print(left)
     print(right)
     print(left - right)
-    if (left - right) > 0.01:
-
-        rotate = "clockwise"
-    elif (left - right) < -0.01:
-        rotate = "counterclockwise"
+    angle = get_angle(left, right)
+    if (angle > 18):
+        rotate = str(angle - 15)
+    elif (angle < 12):
+        rotate = str(angle - 15)
+    elif (angle < 18 and angle > 15.5):
+        rotate = "1"
+    elif (angle < 14.5 and angle > 12):
+        rotate = "-1"
     else:
-        rotate = "balanced"
+        rotate = "0"
     return RotationResponse(rotate)
 
 
